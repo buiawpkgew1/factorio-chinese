@@ -1,13 +1,13 @@
 -- Define global variables to store the GUI elements
-global.mod_info_button = nil
-global.mod_info_frame = nil
+storage.mod_info_button = nil
+storage.mod_info_frame = nil
 
 -- Function to create the mod info button
 local function create_mod_info_button(player)
     if player.gui.left.mod_info_button then
         return
     end
-    global.mod_info_button = player.gui.left.add { type = "button", name = "mod_info_button", caption = "Mod Info" }
+    storage.mod_info_button = player.gui.left.add { type = "button", name = "mod_info_button", caption = "Mod Info" }
 end
 
 -- Function to create the mod info panel
@@ -15,12 +15,13 @@ local function create_mod_info_panel(player)
     if player.gui.center.mod_info_frame then
         return
     end
-    global.mod_info_frame = player.gui.center.add { type = "frame", name = "mod_info_frame", direction = "vertical", caption = "Mod Information" }
+    storage.mod_info_frame = player.gui.center.add { type = "frame", name = "mod_info_frame", direction = "vertical", caption = "Mod Information" }
 
-    local info_panel = global.mod_info_frame.add { type = "scroll-pane", vertical_scroll_policy = "auto", horizontal_scroll_policy = "never" }
+    local info_panel = storage.mod_info_frame.add { type = "scroll-pane", vertical_scroll_policy = "auto", horizontal_scroll_policy = "never" }
     info_panel.style.maximal_height = 300
 
     info_panel.add { type = "label", caption = "Welcome to [Your Mod Name]!" }
+
     info_panel.add { type = "label", caption = "Basic Suggestions:" }
     info_panel.add { type = "label", caption = "- Do X to achieve Y" }
     info_panel.add { type = "label", caption = "- Press Z for more options" }
@@ -42,7 +43,7 @@ local function remove_mod_info_panel(player)
 end
 
 -- When player is created, add the button to their UI
-script.on_event(defines.events.on_player_created, function(event)
+MyEvent.on_event(defines.events.on_player_created, function(event)
     local player = game.players[event.player_index]
     create_mod_info_button(player)
 end)
@@ -65,5 +66,5 @@ local function on_gui_click(event)
 end
 
 -- Handle GUI clicks
-script.on_event(defines.events.on_gui_click, on_gui_click)
-script.on_event(defines.events.on_player_joined_game, on_gui_click)
+MyEvent.on_event(defines.events.on_gui_click, on_gui_click)
+MyEvent.on_event(defines.events.on_player_joined_game, on_gui_click)
